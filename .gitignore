@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model files — use Git LFS instead of committing directly (see README).
+# Uncomment the line below if you're using the Hugging Face Hub download
+# path instead of committing the model file at all.
+# model/*.keras
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Streamlit
+.streamlit/secrets.toml
