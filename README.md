@@ -79,5 +79,126 @@ Both models used the same two-phase fine-tuning strategy:
 The complete training and evaluation pipeline was repeated using five random
 seeds:
 
-```text
-42, 123, 456, 789, 2026
+    42, 123, 456, 789, 2026
+
+Results are reported as **mean ± standard deviation** across the five seeds.
+
+---
+
+## Evaluation
+
+Models were evaluated using:
+
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- ROC-AUC
+- Average Precision
+
+Evaluation was performed at both:
+
+- **Image level**
+- **Patient level**
+
+Additional experiments included:
+
+- Test-time augmentation
+- Performance across 40X, 100X, 200X and 400X magnifications
+
+---
+
+## Results
+
+### Image-Level Performance
+
+Mean ± standard deviation across five seeds.
+
+| Model | Accuracy | Precision | Recall | F1 | AUC |
+|---|---:|---:|---:|---:|---:|
+| Baseline CNN | 81.04% ± 7.57 | 93.23% ± 6.74 | 80.13% ± 16.14 | 84.93% ± 8.18 | 94.43% ± 1.22 |
+| ResNet50 | **89.22% ± 1.07** | 97.05% ± 0.94 | 87.34% ± 0.81 | **91.94% ± 0.80** | **97.38% ± 0.88** |
+| EfficientNetB0 | 88.24% ± 2.44 | **98.73% ± 0.26** | 84.37% ± 3.44 | 90.95% ± 2.04 | 96.96% ± 0.56 |
+
+### Patient-Level Performance
+
+| Model | Accuracy | Precision | Recall | F1 | AUC |
+|---|---:|---:|---:|---:|---:|
+| Baseline CNN | 84.62% ± 13.32 | 98.00% ± 4.47 | 80.00% ± 21.37 | 86.40% ± 14.21 | 98.33% ± 1.52 |
+| ResNet50 | 100.00% ± 0.00 | 100.00% ± 0.00 | 100.00% ± 0.00 | 100.00% ± 0.00 | 100.00% ± 0.00 |
+| EfficientNetB0 | 92.31% ± 0.00 | 100.00% ± 0.00 | 88.89% ± 0.00 | 94.12% ± 0.00 | 100.00% ± 0.00 |
+
+### Key Finding
+
+Transfer learning substantially outperformed the baseline CNN and showed much
+lower seed-to-seed variation.
+
+The baseline CNN's patient-level recall varied by more than 20 percentage
+points across five seeds, while both transfer-learning models showed much
+greater stability.
+
+---
+
+## Repository Structure
+
+    breakhis-classifier/
+    │
+    ├── model/
+    │   └── trained model files
+    │
+    ├── src/
+    │   ├── __init__.py
+    │   ├── predict.py
+    │   └── preprocess.py
+    │
+    ├── .gitignore
+    ├── README.md
+    └── requirements.txt
+
+### Source Files
+
+- `preprocess.py` — image preprocessing and input preparation.
+- `predict.py` — model loading and prediction pipeline.
+- `model/` — trained model files used for inference.
+
+The repository contains the implementation code, trained model files and
+supporting configuration used during the experiments.
+
+---
+
+## Limitations
+
+- This is a research and educational project and is **not clinically validated**.
+- The patient-level test set contains approximately 12 patients, so patient-level
+  performance should be interpreted cautiously.
+- A frozen-backbone-only control was not included, so the individual contribution
+  of partial unfreezing cannot be isolated from transfer learning as a whole.
+- The experiments use a single dataset; generalization to images from different
+  laboratories, scanners or staining protocols was not evaluated.
+- ROC and precision-recall curves were generated from a representative seed
+  rather than averaged across all five seeds.
+
+---
+
+## Future Work
+
+- Add a frozen-backbone control condition.
+- Perform patient-level k-fold cross-validation.
+- Investigate magnification-specific fine-tuning.
+- Analyze the architecture-dependent effect of test-time augmentation.
+- Average ROC and precision-recall curves across all random seeds.
+
+---
+
+## Acknowledgments
+
+This project was conducted as part of a research internship at the
+**Department of Computer Science and Engineering, Motilal Nehru National
+Institute of Technology Allahabad**, under the guidance of **Dr. Ranvijay**.
+
+Dataset: [BreaKHis](https://web.inf.ufpr.br/vri/databases/breast-cancer-histopathological-database-breakhis/)
+
+Architectures:
+
+- ResNet50
+- EfficientNetB0
