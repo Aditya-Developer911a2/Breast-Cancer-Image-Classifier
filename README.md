@@ -144,7 +144,7 @@ greater stability.
     breakhis-classifier/
     │
     ├── model/
-    │   └── trained model files
+    │   └── efficientnetb0_seed42.keras
     │
     ├── src/
     │   ├── __init__.py
@@ -159,7 +159,7 @@ greater stability.
 
 - `preprocess.py` — image preprocessing and input preparation.
 - `predict.py` — model loading and prediction pipeline.
-- `model/` — trained model files used for inference.
+- `efficientnetb0_seed42.keras` — trained EfficientNetB0 model checkpoint used for inference.
 
 The repository contains the implementation code, trained model files and
 supporting configuration used during the experiments.
